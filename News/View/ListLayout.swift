@@ -16,31 +16,21 @@ class ListFlowLayout: UICollectionViewFlowLayout {
         setupLayout()
     }
     
-    /**
-     Init method
-     
-     - parameter aDecoder: aDecoder
-     
-     - returns: self
-     */
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupLayout()
     }
     
-    /**
-     Sets up the layout for the collectionView. 0 distance between each cell, and vertical layout
-     */
     func setupLayout() {
         minimumInteritemSpacing = 0
-        minimumLineSpacing = 1
+        minimumLineSpacing = 10
         scrollDirection = .vertical
-        
+        sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     }
     
     var itemWidth: CGFloat {
         
-        return collectionView!.frame.width
+        return collectionView!.frame.width - 10
     }
     
     override var itemSize: CGSize {

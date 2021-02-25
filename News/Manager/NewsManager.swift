@@ -13,7 +13,7 @@ class NewsManager {
     private var pageCount = 1
     private var apiManager = APIManager()
     
-    func getNews(completion: @escaping (_ news: Articles) -> Void) {
+    func getNews(completion: @escaping (_ news: Articles?, _ error: APIManager.CustomError?) -> Void) {
         guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=79b25b150d504b818cab4c2dd000f59a&pageSize=10&page=\(pageCount)") else {
              return
         }
@@ -26,11 +26,17 @@ class NewsManager {
                 guard let data = result.data else {
                     return
                 }
-                let articles = try! decoder.decode(Articles.self, from: data)
-                self.pageCount += 1
-                completion(articles)
+                do {
+                    let articles =  try decoder.decode(Articles.self, from: data)
+                    self.pageCount += 1
+                    completion(articles, nil)
+                } catch  {
+                    completion(nil, .noData)
+                }
+                
+                
             } else {
-                //TODO: Handle error
+                completion(nil, result.error)
             }
             
         }

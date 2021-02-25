@@ -19,15 +19,19 @@ class NewsCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.applycornerRadius()
+        thumbnailImageView.applycornerRadius()
     }
     
     func updateUI(news: Article) {
         titleLabel.text = news.title
         descriptionTextView.text = news.description
-        dateLabel.text = news.publishedAt
+        dateLabel.text = news.publishedAt?.formatDate()
         if let urlString = news.urlToImage, let url = URL(string: urlString) {
             let imageResource = ImageResource(downloadURL: url)
             thumbnailImageView.kf.setImage(with: imageResource, placeholder: nil, options: nil, completionHandler: nil)
+        } else {
+            thumbnailImageView.image = #imageLiteral(resourceName: "placeholder")
         }
     }
 

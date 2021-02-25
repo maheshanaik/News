@@ -5,4 +5,11 @@
 //  Created by Mahesha on 24/02/21.
 //
 
-import Foundation
+import UIKit
+
+extension UIView {
+    func applycornerRadius() {
+        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
+    }
+}
